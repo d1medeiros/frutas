@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="_template.xhtml">
+
+	<ui:define name="titulo">
+		<p:outputPanel>Cadastro de Produto</p:outputPanel>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form>
+			<p:panelGrid columns="2">
+			
+				<p:outputLabel value="Nome:" />
+				<p:inputText value="#{produtoBean.produto.nome}" />
+
+				<p:outputLabel value="Preço:" />
+				<p:inputText value="#{produtoBean.produto.preco}" />
+
+				<p:outputLabel value="Data Lançamento:">
+					<p:calendar value="#{produtoBean.produto.dataLancamento.time}"	timeZone="America/Sao_Paulo" pattern="dd/MM/yyyy" mask="true" />
+				</p:outputLabel>
+
+				<p:outputLabel value="Selecione o Fornecedor:">
+					<p:selectOneMenu value="#{produtoBean.fornecedorId}">
+						<f:selectItems value="#{produtoBean.fornecedores}" var="fornecedor" itemLabel="#{fornecedor.nome}" itemValue="#{fornecedor.id}" />
+					</p:selectOneMenu>
+				</p:outputLabel>
+
+				<p:commandButton action="#{produtoBean.cadastrar}" value="cadastrar" process="@form" update="@form :dados" />
+				
+			</p:panelGrid>
+		</h:form>
+
+		<h:form id="dados">
+			<p:dataTable value="#{produtoBean.produtos}" var="produto">
+			
+				<p:column headerText="Nome:">
+					<h:outputText value="#{produto.nome}" />
+				</p:column>
+				
+				<p:column headerText="Preço">
+					<h:outputText value="#{produto.preco}">
+						<f:convertNumber type="currency" pattern="R$ #0.00"	currencySymbol="R$" locale="pt_BR" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Data Lançamento">
+					<h:outputText value="#{produto.dataLancamento.time}">
+						<f:convertDateTime pattern="dd/MM/yyyy"	timeZone="America/Sao_Paulo" />
+					</h:outputText>
+				</p:column>
+				
+				<p:column headerText="Remover">
+					<p:commandLink actionListener="#{produtoBean.remover(produto)}" value="remover" process="@this" update="@form" />
+				</p:column>
+				
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+
+
+</html>

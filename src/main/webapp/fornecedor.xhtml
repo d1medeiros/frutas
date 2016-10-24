@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="US-ASCII" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="_template.xhtml">
+
+		<ui:define name="titulo">
+				<p:outputPanel>Cadastro de Fornecedor</p:outputPanel>
+		</ui:define>
+
+		<ui:define name="conteudo">
+	<h:form>
+		<p:panelGrid columns="2">
+			<p:outputLabel value="Nome:" />
+			<p:inputText value="#{fornecedorBean.fornecedor.nome}"/>
+			
+			<p:commandButton action="#{fornecedorBean.cadastrar}" value="cadastrar" process="@form" update="@form :dadosF"/>
+		</p:panelGrid>
+	</h:form>
+	<h:form id="dadosF">
+		<p:dataTable value="#{fornecedorBean.fornecedores}"	var="fornecedor">
+			<p:column headerText="Nome:">
+				<h:outputText value="#{fornecedor.nome}" />
+			</p:column>
+			<p:column headerText="Remover">
+				<p:commandLink actionListener="#{fornecedorBean.remover(fornecedor)}" value="remover" process="@this" update="@form"/>
+			</p:column>
+		</p:dataTable>
+	</h:form>
+		</ui:define>
+
+</ui:composition>
+
+
+</html>

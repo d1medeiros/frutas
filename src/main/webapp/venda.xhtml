@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="_template.xhtml">
+
+	<ui:define name="titulo">
+		<p:outputPanel>Vendas</p:outputPanel>
+	</ui:define>
+
+	<ui:define name="conteudo">
+
+		<p:layout >
+			<p:layoutUnit position="west" size="1020" minSize="500" maxSize="1020">
+			<h:form>
+				<p:fieldset>
+					<p:dataTable value="#{vendaBean.carrinho}" var="produto">
+	
+						<f:facet name="header">Compras</f:facet>
+						<p:column>
+							<h:outputText value="#{produto.nome}" />
+						</p:column>
+
+						<p:column>
+							<p:commandLink value="Add lista" action="#{vendaBean.addCarrinho(produto)}" process="@this" update="@form :listaCompras" />
+						</p:column>
+	
+					</p:dataTable>
+				</p:fieldset>
+			</h:form>
+   	  		</p:layoutUnit>
+
+			<p:layoutUnit position="center">
+			<h:form id="listaCompras">
+				<p:fieldset>
+					<p:dataTable value="#{vendaBean.carrinhoCompra}" var="carrinho">
+						
+						<f:facet name="header">Lista de Compras</f:facet>
+						<p:column>
+							<h:outputText value="#{carrinho.nome}" />
+						</p:column>
+	
+						<p:column>
+							<p:commandLink value="Remove lista" />
+						</p:column>
+	
+					</p:dataTable>
+				</p:fieldset>
+			</h:form>
+  			</p:layoutUnit>
+		</p:layout>
+
+	</ui:define>
+
+</ui:composition>
+
+
+</html>
